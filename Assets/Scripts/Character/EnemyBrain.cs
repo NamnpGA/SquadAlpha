@@ -14,7 +14,7 @@ public class EnemyBrain : CharacterBrain
     protected List<Vector3> wayPoints = null;
     protected int currentWaypointIndex = 0;
 
-    protected Transform player => GameManager.Instance.player.transform;
+    protected override CharacterBrain targetAttack => GameManager.Instance.player;
 
     protected bool arried = false;
     protected bool onFollowPlayer = false;
@@ -31,17 +31,23 @@ public class EnemyBrain : CharacterBrain
         if (arried)
             return;
 
-        onFollowPlayer = Vector3.Distance(transform.position, player.position) <= attackRange;
-        
-        if (onFollowPlayer)
+        if (targetAttack != null && Vector3.Distance(transform.position, targetAttack.transform.position) <= attackRange)
+        {
+            onFollowPlayer = true;
+            agent.AgentBody.isStopped = true;
+            DoAttack();
+            return;
+        }
+
+        if (onFollowPlayer && targetAttack != null && Vector3.Distance(transform.position, targetAttack.transform.position) > attackRange)
         {
             characterAnimator.SetMovement(CharacterAnimator.MovementType.Run);
-            agent.MoveToDestination(player.position);
+            agent.SetDestination(targetAttack.transform.position);
             return;
         }
 
         characterAnimator.SetMovement(CharacterAnimator.MovementType.Run);
-        agent.MoveToDestination(wayPoints[currentWaypointIndex]);
+        agent.SetDestination(wayPoints[currentWaypointIndex]);
     }
 
     protected virtual void OnArried()
