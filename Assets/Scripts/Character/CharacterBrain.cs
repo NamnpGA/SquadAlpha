@@ -16,7 +16,13 @@ public abstract class CharacterBrain : MonoBehaviour
 
 
     protected abstract CharacterBrain targetAttack { get; }
-    
+
+
+
+    private void OnEnable()
+    {
+        EventDispatcher.TriggerEvent(Events.OnHealthChanged);
+    }
 
 
     protected virtual void Awake()

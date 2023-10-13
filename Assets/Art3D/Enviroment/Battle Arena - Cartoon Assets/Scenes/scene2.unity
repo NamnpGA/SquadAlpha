@@ -22393,6 +22393,8 @@ MonoBehaviour:
   enemies:
   - {fileID: 1579118960}
   player: {fileID: 7615597597583668597}
+  hero: {fileID: 7615597597583668597}
+  enemy: {fileID: 1579118960}
 --- !u!4 &1324376966
 Transform:
   m_ObjectHideFlags: 0

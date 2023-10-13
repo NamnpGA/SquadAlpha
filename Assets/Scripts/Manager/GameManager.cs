@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,13 @@ public class GameManager : MonoBehaviour
     public HeroBrain player = null;
 
 
+    public HeroBrain hero = null;
+    public EnemyBrain enemy = null;
+
+
+    public Func<float> GetEnemyDamage = null;
+
+
 
     private void Awake()
     {
@@ -19,10 +27,28 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        GetEnemyDamage = enemy.GetMyDamage;
+        hero.GetEnemeyDamage = GetEnemyDamage;
     }
 
     private void OnDestroy()
     {
         Instance = null;
+    }
+
+    private void OnEnable()
+    {
+        EventDispatcher.AddListener(Events.OnHealthChanged, OnPlayerHealthChanged);
+    }
+
+    private void OnDisable()
+    {
+        EventDispatcher.RemoveListener(Events.OnHealthChanged, OnPlayerHealthChanged);
+    }
+
+    private void OnPlayerHealthChanged()
+    {
+        Debug.Log("GameManager Trigger OnHealthChange");
     }
 }
