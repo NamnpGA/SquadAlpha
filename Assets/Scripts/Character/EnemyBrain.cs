@@ -22,12 +22,12 @@ public class EnemyBrain : CharacterBrain
 
     private void OnEnable()
     {
-        EventDispatcher.AddListener(Events.OnHealthChanged, OnPlayerHealthChanged);
+
     }
 
     private void OnDisable()
     {
-        EventDispatcher.RemoveListener(Events.OnHealthChanged, OnPlayerHealthChanged);
+
     }
 
     private void OnPlayerHealthChanged()

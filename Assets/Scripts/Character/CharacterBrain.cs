@@ -21,7 +21,7 @@ public abstract class CharacterBrain : MonoBehaviour
 
     private void OnEnable()
     {
-        EventDispatcher.TriggerEvent(Events.OnHealthChanged);
+
     }
 
 
